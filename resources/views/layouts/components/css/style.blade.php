@@ -4,3 +4,5 @@
     rel="stylesheet">
 
 <link href="{{ asset('templating/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+@stack("style-css")
