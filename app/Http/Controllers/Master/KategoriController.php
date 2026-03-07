@@ -1,0 +1,146 @@
+<?php
+
+namespace App\Http\Controllers\Master;
+
+use App\Http\Controllers\Controller;
+use App\Models\Kategori;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class KategoriController extends Controller
+{
+    public function index()
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $data["kategori"] = Kategori::orderBy("created_at", "DESC")->get();
+
+            DB::commit();
+
+            return view("modules.master.kategori.index", $data);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with("error", $e->getMessage());
+        }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            Kategori::create([
+                "nama_kategori" => $request->nama_kategori
+            ]);
+
+            DB::commit();
+
+            return back()->with("success", "Data Berhasil di Tambahkan");
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with("error", $e->getMessage());
+        }
+    }
+
+    public function edit($id)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $data["kategori"] = Kategori::where("id", "!=", $id)->orderBy("created_at", "DESC")->get();
+            $data["edit"] = Kategori::where("id", $id)->first();
+
+            DB::commit();
+
+            return view("modules.master.kategori.edit", $data);
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with("error", $e->getMessage());
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            Kategori::where("id", $id)->update([
+                "nama_kategori" => $request["nama_kategori"]
+            ]);
+
+            DB::commit();
+
+            return back()->with("success", "Data Berhasil di Simpan");
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with("error", $e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            Kategori::where("id", $id)->delete();
+
+            DB::commit();
+
+            return back()->with("success", "Data Berhasil di Hapus");
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with("error", $e->getMessage());
+        }
+    }
+
+    public function change_status($id)
+    {
+        try {
+
+            DB::beginTransaction();
+
+            $kategori = Kategori::where("id", $id)->first();
+
+            if ($kategori['is_active'] == "1") {
+                $kategori->update([
+                    "is_active" => "0"
+                ]);
+            } else if ($kategori['is_active'] == "0") {
+                $kategori->update([
+                    "is_active" => "1"
+                ]);
+            }
+
+            DB::commit();
+
+            return back()->with("success", "Data Berhasil di Simpan");
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()->with("error", $e->getMessage());
+        }
+    }
+}

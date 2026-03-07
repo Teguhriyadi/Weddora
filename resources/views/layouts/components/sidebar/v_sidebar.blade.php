@@ -44,6 +44,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ url('/modules/kategori') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Kategori</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('/modules/role') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Role</span>
