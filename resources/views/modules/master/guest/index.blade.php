@@ -24,6 +24,9 @@
             <a href="{{ url('/modules/guest/create') }}" class="btn btn-primary btn-sm">
                 <i class="fa fa-plus"></i> TAMBAH DATA
             </a>
+            <a href="{{ url('/modules/guest/download') }}" class="btn btn-success btn-sm">
+                <i class="fa fa-download"></i> DOWNLOAD DATA
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -52,7 +55,17 @@
                                 <td>{{ $item['nama_tamu'] }}</td>
                                 <td>{{ $item['keluarga'] }}</td>
                                 <td>{{ $item['jumlah_undangan'] }}</td>
-                                <td class="text-center">{{ $item['status_kehadiran'] }}</td>
+                                <td class="text-center">
+                                    @if ($item['status_kehadiran'] == 0)
+                                        <span class="badge bg-danger text-white text-uppercase">
+                                            Belum Hadir
+                                        </span>
+                                    @elseif($item['status_kehadiran'] == 1)
+                                        <span class="badge bg-success text-white text-uppercase">
+                                            Sudah Hadir
+                                        </span>
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ url('/modules/guest/' . $item['id'] . '/edit') }}"
                                         class="btn btn-warning btn-sm">

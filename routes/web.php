@@ -6,6 +6,7 @@ use App\Http\Controllers\Master\GuestController;
 use App\Http\Controllers\Master\KategoriController;
 use App\Http\Controllers\Master\RoleController;
 use App\Http\Controllers\Master\UserController;
+use App\Http\Controllers\QRCode\ScanQRGuestController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(["web", "guest"])->group(function () {
@@ -25,7 +26,10 @@ Route::middleware(["web", "autentikasi"])->group(function () {
         Route::get("/kategori/{id}/change-status", [KategoriController::class, "change_status"]);
         Route::resource("kategori", KategoriController::class);
 
+        Route::get("/guest/download", [GuestController::class, "download"]);
         Route::resource("guest", GuestController::class);
+
+        Route::resource("scan-qr-guest", ScanQRGuestController::class);
     });
 
     Route::get("/logout", [LoginController::class, "logout"]);

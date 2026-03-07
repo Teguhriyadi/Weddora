@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Exports\GuestExport;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Guest;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuestController extends Controller
 {
@@ -176,5 +178,10 @@ class GuestController extends Controller
 
             return back()->with("error", $e->getMessage());
         }
+    }
+
+    public function download()
+    {
+        return Excel::download(new GuestExport, 'data-guest.xlsx');
     }
 }
