@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\Master\GuestController;
 use App\Http\Controllers\Master\KategoriController;
 use App\Http\Controllers\Master\RoleController;
 use App\Http\Controllers\Master\UserController;
@@ -23,6 +24,8 @@ Route::middleware(["web", "autentikasi"])->group(function () {
 
         Route::get("/kategori/{id}/change-status", [KategoriController::class, "change_status"]);
         Route::resource("kategori", KategoriController::class);
+
+        Route::resource("guest", GuestController::class);
     });
 
     Route::get("/logout", [LoginController::class, "logout"]);

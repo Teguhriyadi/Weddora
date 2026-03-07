@@ -51,6 +51,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ url('/modules/guest') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Tamu Undangan</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('/modules/role') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Role</span>

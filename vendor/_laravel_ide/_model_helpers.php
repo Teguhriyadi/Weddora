@@ -341,10 +341,13 @@ namespace App\Models {
      * @property string|null $keluarga
      * @property string $nama_tamu
      * @property string|null $kode_token
+     * @property string $kategori_id
      * @property string $event_id
      * @property string $id
+     * @property-read \App\Models\Kategori $kategori
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereEventId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereKategoriId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereKodeToken($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereNamaTamu($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereKeluarga($value)
@@ -1000,6 +1003,16 @@ namespace App\Models {
     /**
      * App\Models\Kategori
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $is_active
+     * @property string $nama_kategori
+     * @property string $id
+     * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori whereNamaKategori($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori whereIsActive($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Kategori>|Kategori query()
@@ -1644,6 +1657,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $is_active
      * @property string $role_id
      * @property string $password
      * @property string $email
@@ -1657,6 +1671,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereEmail($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User wherePassword($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereRoleId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereIsActive($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User newModelQuery()

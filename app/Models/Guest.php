@@ -18,4 +18,9 @@ class Guest extends Model
     protected $keyType = "string";
 
     public $primaryKey = "id";
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, "kategori_id");
+    }
 }
