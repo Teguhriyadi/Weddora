@@ -36,6 +36,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ url('/modules/input-attendance') }}">
+            <i class="fas fa-fw fa-edit"></i>
+            <span>Input Kehadiran</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('/modules/history-guest') }}">
             <i class="fas fa-fw fa-book"></i>
             <span>Riwayat Tamu Undangan</span>

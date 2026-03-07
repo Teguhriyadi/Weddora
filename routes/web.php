@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\InputManual\InputAttendanceController;
 use App\Http\Controllers\Master\GuestController;
 use App\Http\Controllers\Master\KategoriController;
 use App\Http\Controllers\Master\RoleController;
@@ -35,6 +36,8 @@ Route::middleware(["web", "autentikasi"])->group(function () {
         Route::prefix("history-guest")->group(function() {
             Route::get("/", [HistoryGuestController::class, "index"]);
         });
+
+        Route::resource("input-attendance", InputAttendanceController::class);
     });
 
     Route::get("/logout", [LoginController::class, "logout"]);
