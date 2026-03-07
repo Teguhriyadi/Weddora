@@ -679,6 +679,7 @@ namespace App\Models {
      * @property mixed $metode
      * @property string $guest_id
      * @property string $id
+     * @property-read \App\Models\Guest $guest
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereGuestId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereMetode($value)

@@ -7,6 +7,7 @@ use App\Http\Controllers\Master\KategoriController;
 use App\Http\Controllers\Master\RoleController;
 use App\Http\Controllers\Master\UserController;
 use App\Http\Controllers\QRCode\ScanQRGuestController;
+use App\Http\Controllers\Report\HistoryGuestController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(["web", "guest"])->group(function () {
@@ -30,6 +31,10 @@ Route::middleware(["web", "autentikasi"])->group(function () {
         Route::resource("guest", GuestController::class);
 
         Route::resource("scan-qr-guest", ScanQRGuestController::class);
+
+        Route::prefix("history-guest")->group(function() {
+            Route::get("/", [HistoryGuestController::class, "index"]);
+        });
     });
 
     Route::get("/logout", [LoginController::class, "logout"]);

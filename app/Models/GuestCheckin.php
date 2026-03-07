@@ -18,4 +18,9 @@ class GuestCheckin extends Model
     protected $keyType = "string";
 
     public $primaryKey = "id";
+
+    public function guest()
+    {
+        return $this->belongsTo(Guest::class, "guest_id");
+    }
 }
