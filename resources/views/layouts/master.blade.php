@@ -9,7 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Blank</title>
+    <title>
+        {{ env('APP_NAME') }} - @stack("title-modules")
+    </title>
 
     @include("layouts.components.css.style")
 
