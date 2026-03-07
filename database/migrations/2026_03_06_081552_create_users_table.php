@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->uuid("role_id", 50);
             $table->foreign('role_id')->references('id')->on('role');
+            $table->enum("is_active", ["1", "0"])->default("1");
             $table->timestamps();
         });
 

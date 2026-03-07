@@ -20,4 +20,9 @@ class User extends Authenticatable
     public $primaryKey = "id";
 
     public $incrementing = false;
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, "role_id");
+    }
 }

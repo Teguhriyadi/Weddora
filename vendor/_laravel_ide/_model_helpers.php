@@ -5,6 +5,18 @@ namespace App\Models {
     /**
      * App\Models\Event
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $lokasi
+     * @property string $tanggal
+     * @property string $nama_event
+     * @property string $id
+     * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event whereNamaEvent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event whereTanggal($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event whereLokasi($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Event>|Event query()
@@ -322,6 +334,24 @@ namespace App\Models {
     /**
      * App\Models\Guest
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $status_kehadiran
+     * @property int $jumlah_undangan
+     * @property string|null $keluarga
+     * @property string $nama_tamu
+     * @property string|null $kode_token
+     * @property string $event_id
+     * @property string $id
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereEventId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereKodeToken($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereNamaTamu($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereKeluarga($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereJumlahUndangan($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereStatusKehadiran($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Guest>|Guest query()
@@ -639,6 +669,20 @@ namespace App\Models {
     /**
      * App\Models\GuestCheckin
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $users_id
+     * @property string $waktu_checkin
+     * @property mixed $metode
+     * @property string $guest_id
+     * @property string $id
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereGuestId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereMetode($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereWaktuCheckin($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereUsersId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin query()
@@ -956,6 +1000,14 @@ namespace App\Models {
     /**
      * App\Models\Role
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $nama_role
+     * @property string $id
+     * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereNamaRole($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<Role>|Role query()
@@ -1281,6 +1333,7 @@ namespace App\Models {
      * @property string $username
      * @property string $nama
      * @property string $id
+     * @property-read \App\Models\Role $role
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereNama($value)
      * @method static \Illuminate\Database\Eloquent\Builder<User>|User whereUsername($value)
