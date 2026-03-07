@@ -32,7 +32,10 @@
                     @method("PUT")
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="nama_kategori"> Nama Kategori </label>
+                            <label for="nama_kategori">
+                                Nama Kategori
+                                <span class="text-danger">*</span>
+                            </label>
                             <input type="text" name="nama_kategori" class="form-control" id="nama_kategori"
                                 placeholder="Masukkan Nama Kategori" value="{{ $edit['nama_kategori'] }}">
                         </div>

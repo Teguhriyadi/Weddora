@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\CreateRequest;
+use App\Http\Requests\User\UpdateRequest;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -50,7 +51,7 @@ class UserController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         try {
 
@@ -97,7 +98,7 @@ class UserController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         try {
 

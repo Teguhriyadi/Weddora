@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Kategori\CreateRequest;
+use App\Http\Requests\Kategori\EditRequest;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +31,7 @@ class KategoriController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         try {
 
@@ -72,7 +74,7 @@ class KategoriController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(EditRequest $request, $id)
     {
         try {
 

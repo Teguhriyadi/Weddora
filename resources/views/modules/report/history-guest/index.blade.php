@@ -26,6 +26,9 @@
             </h6>
         </div>
         <div class="card-body">
+            <a href="{{ url('/modules/history-guest/download') }}" class="btn btn-primary btn-sm mb-3">
+                <i class="fa fa-download"></i> DOWNLOAD DATA
+            </a>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>

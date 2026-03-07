@@ -7,56 +7,56 @@
 
     <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/dashboard') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/dashboard') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/kategori*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/kategori') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-fw fa-envelope-open"></i>
             <span>Kategori</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/guest*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/guest') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Tamu Undangan</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/scan-qr-guest') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/scan-qr-guest') }}">
             <i class="fas fa-fw fa-camera"></i>
             <span>Scan QR Tamu</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/input-attendance') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/input-attendance') }}">
             <i class="fas fa-fw fa-edit"></i>
             <span>Input Kehadiran</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/history-guest') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/history-guest') }}">
             <i class="fas fa-fw fa-book"></i>
             <span>Riwayat Tamu Undangan</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/role*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/role') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-fw fa-user-shield"></i>
             <span>Role</span>
         </a>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item {{ Request::is('modules/users*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/users') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Users</span>

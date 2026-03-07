@@ -25,34 +25,74 @@
                     @csrf
                     <div class="card-body">
                         <div class="mb-3 row">
-                            <label for="kategori_id" class="col-sm-2 col-form-label">Kategori Tamu</label>
+                            <label for="kategori_id" class="col-sm-2 col-form-label">
+                                Kategori Tamu
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="col-sm-10">
-                                <select name="kategori_id" class="form-control" id="kategori_id">
+                                <select name="kategori_id" class="form-control @error('kategori_id') is-invalid @enderror"
+                                    id="kategori_id">
                                     <option value="">- Pilih -</option>
                                     @foreach ($kategori as $item)
-                                        <option value="{{ $item['id'] }}">
+                                        <option value="{{ $item['id'] }}"
+                                            {{ old('kategori_id') == $item['id'] ? 'selected' : '' }}>
                                             {{ $item['nama_kategori'] }}
                                         </option>
                                     @endforeach
                                 </select>
+
+                                @error('kategori_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="nama_tamu" class="col-sm-2 col-form-label">Nama Tamu</label>
+                            <label for="nama_tamu" class="col-sm-2 col-form-label">
+                                Nama Tamu
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="nama_tamu" id="nama_tamu" placeholder="Masukkan Nama Tamu">
+                                <input type="text" class="form-control @error('nama_tamu') is-invalid @enderror"
+                                    name="nama_tamu" id="nama_tamu" placeholder="Masukkan Nama Tamu"
+                                    value="{{ old('nama_tamu') }}">
+
+                                @error('nama_tamu')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="keluarga" class="col-sm-2 col-form-label">Keluarga</label>
+                            <label for="keluarga" class="col-sm-2 col-form-label">
+                                Keluarga
+                                <span class="text-danger">*</span>
+                            </label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="keluarga" id="keluarga" placeholder="Masukkan Nama Keluarga">
+                                <input type="text" class="form-control @error('keluarga') is-invalid @enderror"
+                                    name="keluarga" id="keluarga" placeholder="Masukkan Nama Keluarga"
+                                    value="{{ old('keluarga') }}">
+
+                                @error('keluarga')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                         <div class="mb-3 row">
                             <label for="jumlah_undangan" class="col-sm-2 col-form-label">Jumlah Undangan</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="jumlah_undangan" id="jumlah_undangan" placeholder="0" min="1">
+                                <input type="number" class="form-control" name="jumlah_undangan" id="jumlah_undangan"
+                                    placeholder="0" min="1" value="{{ old('jumlah_undangan') }}">
+
+                                @error('jumlah_undangan')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                     </div>

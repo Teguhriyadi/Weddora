@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Role\CreateRequest;
+use App\Http\Requests\Role\UpdateRequest;
 use App\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
@@ -29,7 +30,7 @@ class RoleController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         try {
 
@@ -72,7 +73,7 @@ class RoleController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         try {
 

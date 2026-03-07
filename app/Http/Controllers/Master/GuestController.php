@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Master;
 
 use App\Exports\GuestExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Guest\CreateRequest;
+use App\Http\Requests\Guest\UpdateRequest;
 use App\Models\Event;
 use App\Models\Guest;
 use App\Models\Kategori;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -53,7 +54,7 @@ class GuestController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
         try {
 
@@ -105,7 +106,7 @@ class GuestController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         try {
 

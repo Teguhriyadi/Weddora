@@ -32,9 +32,18 @@
                     @method("PUT")
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="nama_role"> Nama Role </label>
-                            <input type="text" name="nama_role" class="form-control" id="nama_role"
-                                placeholder="Masukkan Nama Role" value="{{ $edit['nama_role'] }}">
+                            <label for="nama_role">
+                                Nama Role
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" name="nama_role" class="form-control @error('nama_role') is-invalid @enderror" id="nama_role"
+                                placeholder="Masukkan Nama Role" value="{{ old('nama_role', $edit['nama_role']) }}">
+
+                            @error('nama_role')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="card-footer">

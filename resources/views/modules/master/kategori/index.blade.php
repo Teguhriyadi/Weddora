@@ -24,16 +24,26 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fa fa-plus"></i> Tambah Data
+                        <i class="fa fa-plus"></i> TAMBAH DATA
                     </h6>
                 </div>
                 <form action="{{ url('/modules/kategori') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="nama_kategori"> Nama Kategori </label>
-                            <input type="text" name="nama_kategori" class="form-control" id="nama_kategori"
-                                placeholder="Masukkan Nama Kategori">
+                            <label for="nama_kategori">
+                                Nama Kategori
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" name="nama_kategori"
+                                class="form-control @error('nama_kategori') is-invalid @enderror" id="nama_kategori"
+                                placeholder="Masukkan Nama Kategori" value="{{ old('nama_kategori') }}">
+
+                            @error('nama_kategori')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="card-footer">
@@ -67,39 +77,44 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $nomer = 0
+                                    $nomer = 0;
                                 @endphp
                                 @foreach ($kategori as $item)
-                                <tr>
-                                    <td class="text-center">{{ ++$nomer }}.</td>
-                                    <td>{{ $item['nama_kategori'] }}</td>
-                                    <td class="text-center">
-                                        @if ($item['is_active'] == "1")
-                                            <span class="badge bg-success text-white text-uppercase">
-                                                Aktif
-                                            </span>
-                                        @elseif ($item['is_active'] == "0")
-                                            <span class="badge bg-danger text-white text-uppercase">
-                                                Tidak Aktif
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="{{ url('/modules/kategori/' . $item['id'] . '/change-status') }}" class="btn btn-{{ $item['is_active'] == "1" ? 'danger' : 'success' }} btn-sm">
-                                            <i class="fa fa-{{ $item['is_active'] == '1' ? 'times' : 'check' }}"></i> {{ $item['is_active'] == "1" ? 'NON - AKTIFKAN' : 'AKITFKAN' }}
-                                        </a>
-                                        <a href="{{ url('/modules/kategori/' . $item['id'] . '/edit') }}" class="btn btn-warning btn-sm">
-                                            <i class="fa fa-edit"></i> EDIT
-                                        </a>
-                                        <form action="{{ url('/modules/kategori/' . $item['id']) }}" method="POST" style="display: inline">
-                                            @csrf
-                                            @method("DELETE")
-                                            <button onclick="return confirm('Yakin ? Ingin Menghapus Data Ini?')" type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-trash"></i> HAPUS
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td class="text-center">{{ ++$nomer }}.</td>
+                                        <td>{{ $item['nama_kategori'] }}</td>
+                                        <td class="text-center">
+                                            @if ($item['is_active'] == '1')
+                                                <span class="badge bg-success text-white text-uppercase">
+                                                    Aktif
+                                                </span>
+                                            @elseif ($item['is_active'] == '0')
+                                                <span class="badge bg-danger text-white text-uppercase">
+                                                    Tidak Aktif
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ url('/modules/kategori/' . $item['id'] . '/change-status') }}"
+                                                class="btn btn-{{ $item['is_active'] == '1' ? 'danger' : 'success' }} btn-sm">
+                                                <i class="fa fa-{{ $item['is_active'] == '1' ? 'times' : 'check' }}"></i>
+                                                {{ $item['is_active'] == '1' ? 'NON - AKTIFKAN' : 'AKITFKAN' }}
+                                            </a>
+                                            <a href="{{ url('/modules/kategori/' . $item['id'] . '/edit') }}"
+                                                class="btn btn-warning btn-sm">
+                                                <i class="fa fa-edit"></i> EDIT
+                                            </a>
+                                            <form action="{{ url('/modules/kategori/' . $item['id']) }}" method="POST"
+                                                style="display: inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Yakin ? Ingin Menghapus Data Ini?')"
+                                                    type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash"></i> HAPUS
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>

@@ -24,16 +24,25 @@
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">
-                        <i class="fa fa-plus"></i> Tambah Data
+                        <i class="fa fa-plus"></i> TAMBAH DATA
                     </h6>
                 </div>
                 <form action="{{ url('/modules/role') }}" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="nama_role"> Nama Role </label>
-                            <input type="text" name="nama_role" class="form-control" id="nama_role"
-                                placeholder="Masukkan Nama Role">
+                            <label for="nama_role">
+                                Nama Role
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input type="text" name="nama_role" class="form-control @error('nama_role') is-invalid @enderror" id="nama_role"
+                                placeholder="Masukkan Nama Role" value="{{ old('nama_role') }}">
+
+                            @error('nama_role')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
                     </div>
                     <div class="card-footer">

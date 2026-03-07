@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Report;
 
+use App\Exports\HistoryGuest;
 use App\Http\Controllers\Controller;
 use App\Models\GuestCheckin;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HistoryGuestController extends Controller
 {
@@ -26,5 +28,10 @@ class HistoryGuestController extends Controller
 
             return back()->with("error", $e->getMessage());
         }
+    }
+
+    public function download()
+    {
+        return Excel::download(new HistoryGuest, 'data-guest.xlsx');
     }
 }
