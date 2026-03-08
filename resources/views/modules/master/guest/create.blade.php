@@ -2,6 +2,11 @@
 
 @push('title-modules', 'Master Tamu Undangan')
 
+@push('style-css')
+    <link href="{{ asset('templating/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('templating/select2/css/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+@endpush
+
 @push('content-modules')
     @if (session('success'))
         <div class="alert alert-success">
@@ -30,7 +35,8 @@
                                 <span class="text-danger">*</span>
                             </label>
                             <div class="col-sm-10">
-                                <select name="kategori_id" class="form-control @error('kategori_id') is-invalid @enderror"
+                                <select name="kategori_id"
+                                    class="form-control select2 @error('kategori_id') is-invalid @enderror"
                                     id="kategori_id">
                                     <option value="">- Pilih -</option>
                                     @foreach ($kategori as $item)
@@ -108,4 +114,17 @@
             </div>
         </div>
     </div>
+@endpush
+
+@push('style-js')
+    <script src="{{ asset('templating/select2/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                theme: 'bootstrap-5',
+                width: '100%',
+                placeholder: 'Pilih Kategori'
+            });
+        });
+    </script>
 @endpush

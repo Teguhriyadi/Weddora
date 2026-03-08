@@ -2,6 +2,11 @@
 
 @push('title-modules', 'Master Users')
 
+@push('style-css')
+    <link href="{{ asset('templating/select2/css/select2.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('templating/select2/css/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+@endpush
+
 @push('content-modules')
     @if (session('success'))
         <div class="alert alert-success">
@@ -111,4 +116,17 @@
             </div>
         </div>
     </div>
+@endpush
+
+@push("style-js")
+    <script src="{{ asset('templating/select2/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                theme: 'bootstrap-5',
+                width: '100%',
+                placeholder: 'Pilih Nama Role'
+            });
+        });
+    </script>
 @endpush

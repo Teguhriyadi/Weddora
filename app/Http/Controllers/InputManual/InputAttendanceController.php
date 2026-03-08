@@ -51,7 +51,7 @@ class InputAttendanceController extends Controller
                 "users_id" => Auth::user()->id
             ]);
 
-            Guest::where("guest_id", $request["guest_id"])->update([
+            Guest::where("id", $request["guest_id"])->update([
                 "status_kehadiran" => 1
             ]);
 
@@ -62,7 +62,18 @@ class InputAttendanceController extends Controller
 
             DB::rollBack();
 
-            return back()->with("error", $e->getMessage());
+            return back()->withInput()->with("error", $e->getMessage());
         }
+    }
+
+    public function info_guest($id)
+    {
+        $guest = Guest::with('kategori')->findOrFail($id);
+        return response()->json([
+            'nama' => $guest->nama_tamu,
+            'kategori' => $guest->kategori->nama_kategori ?? '-',
+            'keluarga' => $guest->keluarga,
+            'jumlah' => $guest->jumlah_undangan
+        ]);
     }
 }

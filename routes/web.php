@@ -38,6 +38,7 @@ Route::middleware(["web", "autentikasi"])->group(function () {
             Route::get("/download", [HistoryGuestController::class, "download"]);
         });
 
+        Route::get("/guest/info/{id}", [InputAttendanceController::class, "info_guest"]);
         Route::resource("input-attendance", InputAttendanceController::class);
     });
 
