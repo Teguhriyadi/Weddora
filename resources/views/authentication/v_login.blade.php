@@ -113,7 +113,7 @@
             <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input type="text" name="username" value="{{ old('username') }}"
-                    class="form-control @error('username') is-invalid @enderror" placeholder="Masukkan username">
+                    class="form-control @error('username') is-invalid @enderror" placeholder="Masukkan Username">
 
                 @error('username')
                     <div class="invalid-feedback">
@@ -125,7 +125,7 @@
             <div class="mb-3">
                 <label class="form-label">Password</label>
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                    placeholder="Masukkan password">
+                    placeholder="Masukkan Password">
 
                 @error('password')
                     <div class="invalid-feedback">
