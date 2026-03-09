@@ -8,7 +8,6 @@ use App\Models\GuestCheckin;
 use App\Models\GuestPublic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class HistoryGuestController extends Controller
