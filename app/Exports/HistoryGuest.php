@@ -3,57 +3,92 @@
 namespace App\Exports;
 
 use App\Models\GuestCheckin;
+use App\Models\GuestPublic;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\FromCollection;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\WithMapping;
 
-class HistoryGuest implements FromCollection, WithHeadings, WithColumnWidths, WithMapping
+class HistoryGuest implements FromCollection, WithHeadings
 {
-    protected $guest;
+    protected $dari;
+    protected $sampai;
+    protected $tab;
 
-    public function title(): string
+    public function __construct($dari, $sampai, $tab)
     {
-        return 'Data Riwayat Undangan Kehadiran';
+        $this->dari = $dari;
+        $this->sampai = $sampai;
+        $this->tab = $tab;
     }
 
     public function collection()
     {
-        $this->guest = GuestCheckin::with(["guest", "guest.kategori"])->get();
-        return $this->guest;
+        if ($this->tab == 'tamu-luar') {
+
+            return GuestPublic::whereBetween('waktu_checkin', [
+                $this->dari . ' 00:00:00',
+                $this->sampai . ' 23:59:59'
+            ])
+                ->orderBy('waktu_checkin', 'DESC')
+                ->get()
+                ->map(function ($item, $index) {
+
+                    return [
+                        'no' => $index + 1,
+                        'nama' => $item->nama,
+                        'pekerjaan' => $item->pekerjaan ?? '-',
+                        'no_hp' => $item->nomor_handphone ?? '-',
+                        'alamat' => $item->alamat ?? '-',
+                        'waktu' => Carbon::parse($item->waktu_checkin)
+                            ->locale('id')
+                            ->translatedFormat('d F Y H:i:s')
+                    ];
+                });
+        } else {
+
+            return GuestCheckin::with('guest.kategori')
+                ->whereBetween('waktu_checkin', [
+                    $this->dari . ' 00:00:00',
+                    $this->sampai . ' 23:59:59'
+                ])
+                ->orderBy('waktu_checkin', 'DESC')
+                ->get()
+                ->map(function ($item, $index) {
+
+                    return [
+                        'no' => $index + 1,
+                        'kategori' => $item->guest->kategori->nama_kategori,
+                        'nama' => $item->guest->nama_tamu,
+                        'keluarga' => $item->guest->keluarga,
+                        'metode' => strtoupper($item->metode),
+                        'waktu' => $item->waktu_checkin
+                    ];
+                });
+        }
     }
 
     public function headings(): array
     {
-        return [
-            'Kategori Tamu',
-            'Nama Tamu',
-            'Keluarga',
-            'Metode',
-            'Tanggal Waktu'
-        ];
-    }
+        if ($this->tab == 'tamu-luar') {
 
-    public function map($guest): array
-    {
-        return [
-            $guest->guest->kategori->nama_kategori,
-            $guest->guest->nama_tamu,
-            $guest->guest->keluarga,
-            $guest->metode,
-            Carbon::parse($guest['waktu_checkin'])->locale('id')->translatedFormat('d F Y H:i:s')
-        ];
-    }
+            return [
+                'No',
+                'Nama',
+                'Pekerjaan',
+                'No. Handphone',
+                'Alamat',
+                'Waktu Checkin'
+            ];
+        } else {
 
-    public function columnWidths(): array
-    {
-        return [
-            'A' => 10,
-            'B' => 15,
-            'C' => 25,
-            'D' => 20,
-            'E' => 15
-        ];
+            return [
+                'No',
+                'Kategori',
+                'Nama Tamu',
+                'Keluarga',
+                'Metode',
+                'Waktu Checkin'
+            ];
+        }
     }
 }
