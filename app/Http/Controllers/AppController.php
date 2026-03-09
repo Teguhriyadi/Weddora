@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guest;
 use App\Models\GuestCheckin;
-use Illuminate\Http\Request;
+use App\Models\GuestPublic;
 
 class AppController extends Controller
 {
@@ -22,8 +22,12 @@ class AppController extends Controller
             ? round(($tamuHadir / $totalTamu) * 100)
             : 0;
 
-        $recentGuests = GuestCheckin::with('guest.kategori')
+        $guest_invitation = GuestCheckin::with('guest.kategori')
             ->latest()
+            ->limit(10)
+            ->get();
+
+        $guest_public = GuestPublic::latest()
             ->limit(10)
             ->get();
 
@@ -46,7 +50,8 @@ class AppController extends Controller
             'belumHadir',
             'totalHadir',
             'persen',
-            'recentGuests',
+            'guest_invitation',
+            'guest_public',
             'chartJam',
             'chartTotal'
         ));

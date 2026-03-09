@@ -77,30 +77,78 @@
                     Tamu Terakhir Check-in
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Kode Token</th>
-                                <th>Nama</th>
-                                <th>Keluarga</th>
-                                <th>Kategori</th>
-                                <th>Waktu Kehadiran</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($recentGuests as $guest)
-                                <tr>
-                                    <td>{{ $guest->guest->kode_token }}</td>
-                                    <td>{{ $guest->guest->nama_tamu }}</td>
-                                    <td>{{ $guest->guest->keluarga }}</td>
-                                    <td>{{ $guest->guest->kategori->nama_kategori ?? '-' }}</td>
-                                    <td>
-                                        {{ \Carbon\Carbon::parse($guest->waktu_checkin)->locale('id')->translatedFormat('d F Y H:i') }}
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <ul class="nav nav-tabs" id="myTab">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request('tab', 'tamu-undangan') == 'tamu-undangan' ? 'active' : '' }}"
+                                data-toggle="tab" href="#tamu-undangan">
+                                Tamu Undangan
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request('tab') == 'tamu-luar' ? 'active' : '' }}" data-toggle="tab"
+                                href="#tamu-luar">
+                                Tamu Luar
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-3">
+                        <div class="tab-pane fade {{ request('tab', 'tamu-undangan') == 'tamu-undangan' ? 'show active' : '' }}"
+                            id="tamu-undangan">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Kode Token</th>
+                                        <th>Nama</th>
+                                        <th>Keluarga</th>
+                                        <th>Kategori</th>
+                                        <th>Waktu Kehadiran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($guest_invitation as $invitation)
+                                        <tr>
+                                            <td>{{ $invitation->guest->kode_token }}</td>
+                                            <td>{{ $invitation->guest->nama_tamu }}</td>
+                                            <td>{{ $invitation->guest->keluarga }}</td>
+                                            <td>{{ $invitation->guest->kategori->nama_kategori ?? '-' }}</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($invitation->waktu_checkin)->locale('id')->translatedFormat('d F Y H:i') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade {{ request('tab') == 'tamu-luar' ? 'show active' : '' }}" id="tamu-luar">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>No. Handphone</th>
+                                        <th>Alamat</th>
+                                        <th>Pekerjaan</th>
+                                        <th>Waktu Kehadiran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($guest_public as $public)
+                                        <tr>
+                                            <td>{{ $public->nama }}</td>
+                                            <td>{{ $public->nomor_handphone }}</td>
+                                            <td>{{ $public->alamat }}</td>
+                                            <td>{{ $public->pekerjaan ?? '-' }}</td>
+                                            <td>
+                                                {{ \Carbon\Carbon::parse($public->waktu_checkin)->locale('id')->translatedFormat('d F Y H:i') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
