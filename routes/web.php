@@ -11,6 +11,10 @@ use App\Http\Controllers\QRCode\ScanQRGuestController;
 use App\Http\Controllers\Report\HistoryGuestController;
 use Illuminate\Support\Facades\Route;
 
+Route::get("/", function() {
+    return redirect()->to("/login");
+});
+
 Route::middleware(["web", "guest"])->group(function () {
     Route::prefix("login")->group(function () {
         Route::get("/", [LoginController::class, "login"]);
