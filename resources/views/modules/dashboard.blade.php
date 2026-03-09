@@ -36,7 +36,7 @@
             <div class="card border-left-info shadow h-100">
                 <div class="card-body">
                     <small class="text-info font-weight-bold">Total Orang Hadir</small>
-                    <h4 class="font-weight-bold">1</h4>
+                    <h4 class="font-weight-bold">{{ $totalHadir }}</h4>
                 </div>
             </div>
         </div>
