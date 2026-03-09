@@ -19,10 +19,17 @@
         </a>
     </li>
 
-    <li class="nav-item {{ Request::is('modules/guest*') ? 'active' : '' }}">
+    <li class="nav-item {{ Request::is('modules/guest') || Request::is('modules/guest/*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('/modules/guest') }}">
             <i class="fas fa-user-friends"></i>
             <span>Tamu Undangan</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ Request::is('modules/guest-public*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/modules/guest-public') }}">
+            <i class="fas fa-user"></i>
+            <span>Tamu Luar</span>
         </a>
     </li>
 

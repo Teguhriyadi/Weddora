@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\InputManual\GuestPublicController;
 use App\Http\Controllers\InputManual\InputAttendanceController;
 use App\Http\Controllers\Master\GuestController;
 use App\Http\Controllers\Master\KategoriController;
@@ -44,6 +45,8 @@ Route::middleware(["web", "autentikasi"])->group(function () {
 
         Route::get("/guest/info/{id}", [InputAttendanceController::class, "info_guest"]);
         Route::resource("input-attendance", InputAttendanceController::class);
+
+        Route::resource("guest-public", GuestPublicController::class);
     });
 
     Route::get("/logout", [LoginController::class, "logout"]);
