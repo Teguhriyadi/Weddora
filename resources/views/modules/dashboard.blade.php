@@ -107,7 +107,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($guest_invitation as $invitation)
+                                    @forelse ($guest_invitation as $invitation)
                                         <tr>
                                             <td>{{ $invitation->guest->kode_token }}</td>
                                             <td>{{ $invitation->guest->nama_tamu }}</td>
@@ -117,7 +117,13 @@
                                                 {{ \Carbon\Carbon::parse($invitation->waktu_checkin)->locale('id')->translatedFormat('d F Y H:i') }}
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="5">
+                                                <strong>Riwayat Belum Ada</strong>
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -133,7 +139,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($guest_public as $public)
+                                    @forelse ($guest_public as $public)
                                         <tr>
                                             <td>{{ $public->nama }}</td>
                                             <td>{{ $public->nomor_handphone }}</td>
@@ -143,7 +149,13 @@
                                                 {{ \Carbon\Carbon::parse($public->waktu_checkin)->locale('id')->translatedFormat('d F Y H:i') }}
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="5">
+                                                <strong>Riwayat Belum Ada</strong>
+                                            </td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
