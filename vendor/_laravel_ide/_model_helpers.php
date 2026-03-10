@@ -1004,6 +1004,24 @@ namespace App\Models {
     /**
      * App\Models\GuestPublic
      *
+     * @property \Illuminate\Support\Carbon|null $updated_at
+     * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string $users_id
+     * @property string $waktu_checkin
+     * @property string|null $alamat
+     * @property string|null $pekerjaan
+     * @property string|null $nomor_handphone
+     * @property string $nama
+     * @property string $id
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereNama($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereNomorHandphone($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic wherePekerjaan($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereAlamat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereWaktuCheckin($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereUsersId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereCreatedAt($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic newModelQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic newQuery()
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic query()

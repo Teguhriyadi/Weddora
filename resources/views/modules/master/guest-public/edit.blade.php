@@ -26,7 +26,7 @@
                         <i class="fa fa-sign-out-alt"></i> KEMBALI
                     </a>
                 </div>
-                <form action="{{ url('/modules/guest-public/' . $edit['alamat']) }}" method="POST">
+                <form action="{{ url('/modules/guest-public/' . $edit['id']) }}" method="POST">
                     @csrf
                     @method("PUT")
                     <div class="card-body">
