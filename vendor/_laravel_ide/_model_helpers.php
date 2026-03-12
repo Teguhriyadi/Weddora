@@ -674,6 +674,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string|null $selfie_path
      * @property string $users_id
      * @property string $waktu_checkin
      * @property mixed $metode
@@ -685,6 +686,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereMetode($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereWaktuCheckin($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereUsersId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereSelfiePath($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestCheckin>|GuestCheckin newModelQuery()
@@ -1006,6 +1008,7 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property string|null $selfie_path
      * @property string $users_id
      * @property string $waktu_checkin
      * @property string|null $alamat
@@ -1020,6 +1023,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereAlamat($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereWaktuCheckin($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereUsersId($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereSelfiePath($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<GuestPublic>|GuestPublic newModelQuery()

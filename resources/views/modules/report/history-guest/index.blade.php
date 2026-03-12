@@ -140,8 +140,7 @@
                                                     Foto Kehadiran Tidak Ada
                                                 </span>
                                             @else
-                                                <img src="{{ Storage::url('selfie/' . $item->selfie_path) }}"
-                                                    width="70" class="rounded">
+                                                <img src="{{ Storage::disk('s3')->url('selfie/'.$item->selfie_path) }}" width="70" class="rounded">
                                             @endif
                                         </td>
                                         <td>{{ $item->nama }}</td>

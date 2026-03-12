@@ -9,6 +9,7 @@ use App\Models\GuestPublic;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 
 class GuestPublicController extends Controller
 {
@@ -57,13 +58,23 @@ class GuestPublicController extends Controller
             $filename = null;
 
             if ($request->selfie) {
+                $imageData = preg_replace('#^data:image/\w+;base64,#i', '', $request->selfie);
+                $imageData = base64_decode($imageData);
 
-                $image = preg_replace('#^data:image/\w+;base64,#i', '', $request->selfie);
-                $image = base64_decode($image);
+                $filename = uniqid('selfie_') . '.jpg';
 
-                $filename = uniqid('selfie_') . '.png';
+                $image = Image::make($imageData)
+                    ->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize();
+                    })
+                    ->encode('jpg', 70);
 
-                Storage::put("selfie/" . $filename, $image);
+                Storage::disk('s3')->put(
+                    "selfie/" . $filename,
+                    (string) $image,
+                    'public'
+                );
             }
 
             GuestPublic::create([
