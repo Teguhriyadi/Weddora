@@ -58,12 +58,10 @@ class GuestPublicController extends Controller
 
             if ($request->selfie) {
 
-                $image = $request->selfie;
-
-                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = preg_replace('#^data:image/\w+;base64,#i', '', $request->selfie);
                 $image = base64_decode($image);
 
-                $filename = "selfie_" . time() . ".png";
+                $filename = uniqid('selfie_') . '.png';
 
                 Storage::put("selfie/" . $filename, $image);
             }
