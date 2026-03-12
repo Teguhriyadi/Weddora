@@ -68,7 +68,6 @@
                 </li>
             </ul>
 
-
             <div class="tab-content mt-3">
                 <div class="tab-pane fade {{ request('tab', 'tamu-undangan') == 'tamu-undangan' ? 'show active' : '' }}"
                     id="tamu-undangan">
@@ -77,6 +76,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
+                                    <th class="text-center">Foto Kehadiran</th>
                                     <th class="text-center">Kategori</th>
                                     <th>Nama Tamu</th>
                                     <th>Keluarga</th>
@@ -88,6 +88,16 @@
                                 @foreach ($guest_invitation as $index => $item)
                                     <tr>
                                         <td class="text-center">{{ $index + 1 }}</td>
+                                        <td class="text-center">
+                                            @if (empty($item['selfie_path']))
+                                                <span class="badge bg-danger text-white">
+                                                    Foto Kehadiran Tidak Ada
+                                                </span>
+                                            @else
+                                                <img src="{{ asset('/storage/selfie/' . $item['selfie_path']) }}"
+                                                    alt="Foto Kehadiran" class="rounded" width="70">
+                                            @endif
+                                        </td>
                                         <td class="text-center">
                                             {{ $item->guest->kategori->nama_kategori }}
                                         </td>
@@ -112,6 +122,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">No</th>
+                                    <th class="text-center">Foto Kehadiran</th>
                                     <th>Nama Tamu</th>
                                     <th>No Handphone</th>
                                     <th>Pekerjaan</th>
@@ -123,6 +134,16 @@
                                 @foreach ($guest_public as $index => $item)
                                     <tr>
                                         <td class="text-center">{{ $index + 1 }}</td>
+                                        <td class="text-center">
+                                            @if (empty($item['selfie_path']))
+                                                <span class="badge bg-danger text-white">
+                                                    Foto Kehadiran Tidak Ada
+                                                </span>
+                                            @else
+                                                <img src="{{ asset('/storage/selfie/' . $item['selfie_path']) }}"
+                                                    alt="Foto Kehadiran" class="rounded" width="70">
+                                            @endif
+                                        </td>
                                         <td>{{ $item->nama }}</td>
                                         <td>{{ $item->nomor_handphone ?? '-' }}</td>
                                         <td>{{ $item->pekerjaan ?? '-' }}</td>
@@ -149,13 +170,13 @@
         $(document).ready(function() {
             $('#dataTableInvitation').DataTable({
                 order: [
-                    [5, 'desc']
+                    [6, 'desc']
                 ]
             });
 
             $('#dataTablePublic').DataTable({
                 order: [
-                    [5, 'desc']
+                    [6, 'desc']
                 ]
             });
 

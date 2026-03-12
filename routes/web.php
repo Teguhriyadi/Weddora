@@ -44,6 +44,8 @@ Route::middleware(["web", "autentikasi"])->group(function () {
         });
 
         Route::get("/guest/info/{id}", [InputAttendanceController::class, "info_guest"]);
+
+        Route::get("/input-attendance/search/", [InputAttendanceController::class, "search_guest"]);
         Route::resource("input-attendance", InputAttendanceController::class);
 
         Route::resource("guest-public", GuestPublicController::class);

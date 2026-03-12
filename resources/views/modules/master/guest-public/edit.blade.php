@@ -1,95 +1,154 @@
 @extends('layouts.master')
 
-@push('title-modules', 'Master Tamu Luar')
+@push('title-modules', 'Edit Data Tamu')
 
 @push('style-css')
-    <link href="{{ asset('templating/select2/css/select2.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('templating/select2/css/select2-bootstrap-5-theme.min.css') }}" rel="stylesheet" />
+    <style>
+        .camera-wrapper {
+            width: 320px;
+            margin: auto;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 4px solid #f1f1f1;
+            background: #000;
+            position: relative;
+        }
+
+        #video {
+            width: 100%;
+        }
+
+        #countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 70px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 10px black;
+            display: none;
+        }
+
+        #flash {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: white;
+            opacity: 0;
+        }
+
+        .flash-animation {
+            animation: flashEffect 0.3s;
+        }
+
+        @keyframes flashEffect {
+            0% {
+                opacity: 0
+            }
+
+            50% {
+                opacity: 1
+            }
+
+            100% {
+                opacity: 0
+            }
+        }
+    </style>
 @endpush
 
+
 @push('content-modules')
+
     @if (session('success'))
         <div class="alert alert-success">
             <strong>Berhasil</strong>, {{ session('success') }}
         </div>
-    @elseif(session('error'))
+    @endif
+
+    @if (session('error'))
         <div class="alert alert-danger">
             <strong>Gagal</strong>, {{ session('error') }}
         </div>
     @endif
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <a href="{{ url('/modules/guest-public') }}" class="btn btn-secondary btn-sm">
-                        <i class="fa fa-sign-out-alt"></i> KEMBALI
+                        <i class="fa fa-arrow-left"></i> KEMBALI
                     </a>
                 </div>
+
                 <form action="{{ url('/modules/guest-public/' . $edit['id']) }}" method="POST">
                     @csrf
-                    @method("PUT")
+                    @method('PUT')
+                    <input type="hidden" name="selfie" id="selfie">
                     <div class="card-body">
-                        <div class="mb-3 row">
-                            <label for="nama" class="col-sm-2 col-form-label">
-                                Nama Tamu
-                                <span class="text-danger">*</span>
-                            </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('nama') is-invalid @enderror"
-                                    name="nama" id="nama" placeholder="Masukkan Nama Tamu" value="{{ old('nama', $edit['nama']) }}">
-
-                                @error('nama')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        Nama Tamu <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="text" class="form-control @error('nama') is-invalid @enderror"
+                                        name="nama" value="{{ old('nama', $edit['nama']) }}"
+                                        placeholder="Masukkan Nama Tamu">
+                                    @error('nama')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">No. Handphone</label>
+                                    <input type="text" class="form-control" name="nomor_handphone"
+                                        value="{{ old('nomor_handphone', $edit['nomor_handphone']) }}"
+                                        placeholder="Masukkan Nomor Handphone">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Pekerjaan</label>
+                                    <input type="text" class="form-control" name="pekerjaan"
+                                        value="{{ old('pekerjaan', $edit['pekerjaan']) }}" placeholder="Masukkan Pekerjaan">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Alamat</label>
+                                    <textarea name="alamat" class="form-control" rows="4" placeholder="Masukkan Alamat">{{ old('alamat', $edit['alamat']) }}</textarea>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="nomor_handphone" class="col-sm-2 col-form-label">
-                                No. Handphone
-                            </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('nomor_handphone') is-invalid @enderror"
-                                    name="nomor_handphone" id="nomor_handphone" placeholder="Masukkan Nomor Handphone"
-                                    value="{{ old('nomor_handphone', $edit['nomor_handphone']) }}">
+                            <div class="col-md-5">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body text-center">
+                                        <div class="camera-title">
+                                            Selfie Tamu
+                                        </div>
+                                        <div id="cameraArea">
+                                            <div class="camera-wrapper mb-3">
 
-                                @error('nomor_handphone')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="pekerjaan" class="col-sm-2 col-form-label">
-                                Pekerjaan
-                            </label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control @error('pekerjaan') is-invalid @enderror"
-                                    name="pekerjaan" id="pekerjaan" placeholder="Masukkan Pekerjaan"
-                                    value="{{ old('pekerjaan', $edit['pekerjaan']) }}">
+                                                <video id="video" autoplay playsinline></video>
 
-                                @error('pekerjaan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="email" class="col-sm-2 col-form-label">
-                                Alamat
-                            </label>
-                            <div class="col-sm-10">
-                                <textarea name="alamat" class="form-control" id="alamat" rows="5" placeholder="Masukkan Alamat">{{ old('alamat', $edit['alamat']) }}</textarea>
+                                                <canvas id="canvas" style="display:none;"></canvas>
 
-                                @error('alamat')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                                                <div id="countdown"></div>
+
+                                                <div id="flash"></div>
+
+                                            </div>
+                                        </div>
+                                        <button type="button" id="btnSelfie" class="btn btn-primary btn-sm"
+                                            onclick="takeSelfie()">
+                                            <i class="fa fa-camera"></i> Ambil Foto Baru
+                                        </button>
+                                        <div id="previewSelfie" class="mt-3">
+                                            @if ($edit['selfie_path'])
+                                                <img src="{{ asset('storage/selfie/' . $edit['selfie_path']) }}"
+                                                    width="200">
+                                            @endif
+                                        </div>
                                     </div>
-                                @enderror
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -107,15 +166,122 @@
     </div>
 @endpush
 
-@push("style-js")
-    <script src="{{ asset('templating/select2/js/select2.min.js') }}"></script>
+@push('style-js')
     <script>
-        $(document).ready(function() {
-            $('.select2').select2({
-                theme: 'bootstrap-5',
-                width: '100%',
-                placeholder: 'Pilih Nama Role'
+        let shutter = new Audio("{{ asset('templating/sound/sound-selfie.mp3') }}");
+
+        let video = document.getElementById('video');
+
+        navigator.mediaDevices.getUserMedia({
+                video: true
+            })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function() {
+                alert("Kamera tidak bisa diakses");
             });
-        });
+
+        let takingPhoto = false;
+
+        function takeSelfie() {
+
+            let selfie = document.getElementById("selfie").value;
+
+            if (selfie) {
+                resetSelfie();
+                return;
+            }
+
+            if (takingPhoto) return;
+
+            takingPhoto = true;
+
+            let countdown = document.getElementById("countdown");
+
+            let count = 3;
+
+            countdown.style.display = "block";
+            countdown.innerText = count;
+
+            let timer = setInterval(() => {
+
+                count--;
+
+                if (count > 0) {
+
+                    countdown.innerText = count;
+
+                } else {
+
+                    clearInterval(timer);
+
+                    countdown.style.display = "none";
+
+                    capturePhoto();
+
+                    takingPhoto = false;
+
+                }
+
+            }, 1000);
+
+        }
+
+        function capturePhoto() {
+
+            let canvas = document.getElementById("canvas");
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            let ctx = canvas.getContext("2d");
+
+            ctx.drawImage(video, 0, 0);
+
+            let image = canvas.toDataURL("image/png");
+
+            document.getElementById("selfie").value = image;
+
+            document.getElementById("previewSelfie").innerHTML =
+                `<img src="${image}" width="250">`;
+
+            shutter.play();
+
+            let flash = document.getElementById("flash");
+
+            flash.classList.add("flash-animation");
+
+            setTimeout(() => {
+                flash.classList.remove("flash-animation");
+            }, 300);
+
+            document.getElementById("cameraArea").style.display = "none";
+
+            let btn = document.getElementById("btnSelfie");
+
+            btn.innerHTML = `<i class="fa fa-refresh"></i> Ambil Selfie Terbaru`;
+
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-warning");
+
+        }
+
+        function resetSelfie() {
+
+            document.getElementById("previewSelfie").innerHTML = "";
+
+            document.getElementById("selfie").value = "";
+
+            document.getElementById("cameraArea").style.display = "block";
+
+            let btn = document.getElementById("btnSelfie");
+
+            btn.innerHTML = `<i class="fa fa-camera"></i> Ambil Selfie`;
+
+            btn.classList.remove("btn-warning");
+            btn.classList.add("btn-primary");
+
+        }
     </script>
 @endpush

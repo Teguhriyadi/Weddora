@@ -34,23 +34,23 @@
                     <thead>
                         <tr>
                             <th class="text-center">No.</th>
-                            <th>Kategori</th>
+                            <th class="text-center">Kategori</th>
                             <th>Kode Token</th>
                             <th>Nama Tamu</th>
                             <th>Keluarga</th>
-                            <th>Jumlah Yang Diundang</th>
-                            <th class="text-center">Status Kehadiran</th>
+                            <th>Jumlah Diundang</th>
+                            <th class="text-center">Status</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                            $nomer = 0
+                            $nomer = 0;
                         @endphp
                         @foreach ($guest as $item)
                             <tr>
                                 <td class="text-center">{{ ++$nomer }}.</td>
-                                <td>{{ $item['kategori']['nama_kategori'] }}</td>
+                                <td class="text-center">{{ $item['kategori']['nama_kategori'] }}</td>
                                 <td>{{ $item['kode_token'] }}</td>
                                 <td>{{ $item['nama_tamu'] }}</td>
                                 <td>{{ $item['keluarga'] }}</td>

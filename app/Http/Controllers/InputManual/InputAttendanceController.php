@@ -8,6 +8,7 @@ use App\Models\GuestCheckin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class InputAttendanceController extends Controller
 {
@@ -44,11 +45,31 @@ class InputAttendanceController extends Controller
                 return back()->with("error", "Nama Tamu " . $guest['nama_tamu'] . ' Sudah Masuk ke Dalam Acara');
             }
 
+            $selfiePath = null;
+
+            if ($request->selfie) {
+
+                $image = $request->selfie;
+
+                $image = str_replace('data:image/png;base64,', '', $image);
+                $image = str_replace(' ', '+', $image);
+
+                $fileName = 'selfie_' . time() . '.png';
+
+                Storage::disk('public')->put(
+                    'selfie/' . $fileName,
+                    base64_decode($image)
+                );
+
+                $selfiePath = $fileName;
+            }
+
             GuestCheckin::create([
                 "guest_id" => $guest["id"],
                 "metode" => "manual",
                 "waktu_checkin" => now(),
-                "users_id" => Auth::user()->id
+                "users_id" => Auth::user()->id,
+                "selfie_path" => $selfiePath,
             ]);
 
             Guest::where("id", $request["guest_id"])->update([
@@ -75,5 +96,27 @@ class InputAttendanceController extends Controller
             'keluarga' => $guest->keluarga,
             'jumlah' => $guest->jumlah_undangan
         ]);
+    }
+
+    public function search_guest(Request $request)
+    {
+        $q = $request->q;
+
+        $data = Guest::with('kategori')
+            ->where('nama_tamu', 'like', '%' . $q . '%')
+            ->limit(20)
+            ->get();
+
+        $result = $data->map(function ($item) {
+
+            return [
+                'id' => $item->id,
+                'nama_tamu' => $item->nama_tamu,
+                'keluarga' => $item->keluarga,
+                'kategori' => $item->kategori->nama_kategori ?? ''
+            ];
+        });
+
+        return response()->json($result);
     }
 }
