@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\QRCode;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
 use App\Models\GuestCheckin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ScanQRGuestController extends Controller
 {
@@ -36,31 +36,14 @@ class ScanQRGuestController extends Controller
             ]);
         }
 
-        $selfiePath = null;
-
-        if ($request->selfie) {
-
-            $image = $request->selfie;
-
-            $image = str_replace('data:image/png;base64,', '', $image);
-            $image = str_replace(' ', '+', $image);
-
-            $fileName = "selfie_" . time() . ".png";
-
-            Storage::disk('public')->put(
-                "selfie/" . $fileName,
-                base64_decode($image)
-            );
-
-            $selfiePath = $fileName;
-        }
+        $fileName = ImageHelper::uploadBase64ToS3($request->selfie);
 
         GuestCheckin::create([
             'guest_id' => $guest->id,
             'metode' => 'qr',
             'waktu_checkin' => now(),
             'users_id' => Auth::user()->id,
-            "selfie_path" => $selfiePath,
+            "selfie_path" => $fileName,
         ]);
 
         $guest->update([

@@ -143,7 +143,7 @@
                                         </button>
                                         <div id="previewSelfie" class="mt-3">
                                             @if ($edit['selfie_path'])
-                                                <img src="{{ asset('storage/selfie/' . $edit['selfie_path']) }}"
+                                                <img src="{{ Storage::disk('s3')->url('selfie/'.$edit->selfie_path) }}"
                                                     width="200">
                                             @endif
                                         </div>

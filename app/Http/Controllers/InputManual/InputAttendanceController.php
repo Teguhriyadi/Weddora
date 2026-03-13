@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\InputManual;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
 use App\Models\GuestCheckin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class InputAttendanceController extends Controller
 {
@@ -45,31 +45,14 @@ class InputAttendanceController extends Controller
                 return back()->with("error", "Nama Tamu " . $guest['nama_tamu'] . ' Sudah Masuk ke Dalam Acara');
             }
 
-            $selfiePath = null;
-
-            if ($request->selfie) {
-
-                $image = $request->selfie;
-
-                $image = str_replace('data:image/png;base64,', '', $image);
-                $image = str_replace(' ', '+', $image);
-
-                $fileName = 'selfie_' . time() . '.png';
-
-                Storage::disk('public')->put(
-                    'selfie/' . $fileName,
-                    base64_decode($image)
-                );
-
-                $selfiePath = $fileName;
-            }
+            $fileName = ImageHelper::uploadBase64ToS3($request->selfie);
 
             GuestCheckin::create([
                 "guest_id" => $guest["id"],
                 "metode" => "manual",
                 "waktu_checkin" => now(),
                 "users_id" => Auth::user()->id,
-                "selfie_path" => $selfiePath,
+                "selfie_path" => $fileName,
             ]);
 
             Guest::where("id", $request["guest_id"])->update([

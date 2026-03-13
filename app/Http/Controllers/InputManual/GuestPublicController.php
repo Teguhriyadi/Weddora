@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\InputManual;
 
+use App\Helpers\ImageHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GuestPublic\CreateRequest;
 use App\Http\Requests\GuestPublic\UpdateRequest;
@@ -9,7 +10,6 @@ use App\Models\GuestPublic;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
 
 class GuestPublicController extends Controller
 {
@@ -55,27 +55,7 @@ class GuestPublicController extends Controller
 
             DB::beginTransaction();
 
-            $filename = null;
-
-            if ($request->selfie) {
-                $imageData = preg_replace('#^data:image/\w+;base64,#i', '', $request->selfie);
-                $imageData = base64_decode($imageData);
-
-                $filename = uniqid('selfie_') . '.jpg';
-
-                $image = Image::make($imageData)
-                    ->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize();
-                    })
-                    ->encode('jpg', 70);
-
-                Storage::disk('s3')->put(
-                    "selfie/" . $filename,
-                    (string) $image,
-                    'public'
-                );
-            }
+            $fileName = ImageHelper::uploadBase64ToS3($request->selfie);
 
             GuestPublic::create([
                 "nama" => $request['nama'],
@@ -84,7 +64,7 @@ class GuestPublicController extends Controller
                 "alamat" => $request["alamat"],
                 "waktu_checkin" => now(),
                 "users_id" => Auth::user()->id,
-                "selfie_path" => $filename,
+                "selfie_path" => $fileName,
             ]);
 
             DB::commit();
@@ -126,23 +106,11 @@ class GuestPublicController extends Controller
             $selfiePath = $guest->selfie_path;
 
             if ($request->selfie) {
-
                 if ($guest->selfie_path) {
-                    Storage::disk('public')->delete('selfie/' . $guest->selfie_path);
+                    Storage::disk('s3')->delete('selfie/' . $guest->selfie_path);
                 }
 
-                $image = $request->selfie;
-                $image = str_replace('data:image/png;base64,', '', $image);
-                $image = str_replace(' ', '+', $image);
-
-                $fileName = 'selfie_' . time() . '.png';
-
-                Storage::disk('public')->put(
-                    'selfie/' . $fileName,
-                    base64_decode($image)
-                );
-
-                $selfiePath = $fileName;
+                $selfiePath = ImageHelper::uploadBase64ToS3($request->selfie, 'selfie', 800, 70);
             }
 
             $guest->update([
@@ -173,7 +141,7 @@ class GuestPublicController extends Controller
             $cek = GuestPublic::where("id", $id)->first();
 
             if ($cek->selfie_path) {
-                Storage::disk('public')->delete('selfie/' . $cek->selfie_path);
+                Storage::disk('s3')->delete('selfie/' . $cek->selfie_path);
             }
 
             $cek->delete();
