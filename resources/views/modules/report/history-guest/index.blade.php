@@ -75,8 +75,8 @@
                         <table class="table table-bordered" id="dataTableInvitation">
                             <thead>
                                 <tr>
-                                    <th class="text-center">No</th>
-                                    <th class="text-center">Foto Kehadiran</th>
+                                    <th style="width: 5%" class="text-center">No</th>
+                                    <th style="width: 10%" class="text-center">Foto Kehadiran</th>
                                     <th class="text-center">Kategori</th>
                                     <th>Nama Tamu</th>
                                     <th>Keluarga</th>
@@ -87,14 +87,20 @@
                             <tbody>
                                 @foreach ($guest_invitation as $index => $item)
                                     <tr>
-                                        <td class="text-center">{{ $index + 1 }}</td>
-                                        <td class="text-center">
+                                        <td style="width: 5%" class="text-center">{{ $index + 1 }}</td>
+                                        <td style="width: 10%" class="text-center">
                                             @if (empty($item['selfie_path']))
                                                 <span class="badge bg-danger text-white">
                                                     Foto Kehadiran Tidak Ada
                                                 </span>
                                             @else
-                                                <img src="{{ Storage::disk('s3')->url('selfie/'.$item->selfie_path) }}" width="70" class="rounded">
+                                                <img src="{{ Storage::disk('s3')->url('selfie/' . $item->selfie_path) }}"
+                                                    width="70" class="rounded">
+                                                <br>
+                                                <button type="button" class="btn btn-primary btn-sm mt-2"
+                                                    data-toggle="modal" data-target="#exampleModal" onclick="showImage(`{{ $item['id'] }}`)">
+                                                    <i class="fa fa-eye"></i> Lihat Gambar
+                                                </button>
                                             @endif
                                         </td>
                                         <td class="text-center">
@@ -120,8 +126,8 @@
                         <table class="table table-bordered" id="dataTablePublic">
                             <thead>
                                 <tr>
-                                    <th class="text-center">No</th>
-                                    <th class="text-center">Foto Kehadiran</th>
+                                    <th style="width: 5%" class="text-center">No</th>
+                                    <th style="width: 10%" class="text-center">Foto Kehadiran</th>
                                     <th>Nama Tamu</th>
                                     <th>No Handphone</th>
                                     <th>Pekerjaan</th>
@@ -132,14 +138,21 @@
                             <tbody>
                                 @foreach ($guest_public as $index => $item)
                                     <tr>
-                                        <td class="text-center">{{ $index + 1 }}</td>
-                                        <td class="text-center">
+                                        <td style="width: 5%" class="text-center">{{ $index + 1 }}</td>
+                                        <td style="width: 10%" class="text-center">
                                             @if (empty($item['selfie_path']))
                                                 <span class="badge bg-danger text-white">
                                                     Foto Kehadiran Tidak Ada
                                                 </span>
                                             @else
-                                                <img src="{{ Storage::disk('s3')->url('selfie/'.$item->selfie_path) }}" width="70" class="rounded">
+                                                <img src="{{ Storage::disk('s3')->url('selfie/' . $item->selfie_path) }}"
+                                                    width="70" class="rounded">
+                                                    <br>
+
+                                                <button type="button" class="btn btn-primary btn-sm mt-2"
+                                                    data-toggle="modal" data-target="#exampleModal" onclick="showImageGuestPublic(`{{ $item['id'] }}`)">
+                                                    <i class="fa fa-eye"></i> Lihat Gambar
+                                                </button>
                                             @endif
                                         </td>
                                         <td>{{ $item->nama }}</td>
@@ -158,6 +171,25 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        <i class="fa fa-eye"></i> Lihat Foto Kehadiran
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="modal-content-foto-kehadiran">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endpush
 
 @push('style-js')
@@ -183,6 +215,34 @@
                 $('#tab_input').val(tab);
             });
         });
+
+        function showImage(id) {
+            $.ajax({
+                url: "{{ url('/modules/history-guest') }}" + "/" + id,
+                type: "GET",
+                success: function(response) {
+                    $("#modal-content-foto-kehadiran").html(response)
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function showImageGuestPublic(id) {
+            $.ajax({
+                url: "{{ url('/modules/history-guest') }}" + "/" + id + "/guest-public",
+                type: "GET",
+                success: function(response) {
+                    $("#modal-content-foto-kehadiran").html(response)
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        showImageGuestPublic
     </script>
 
 @endpush

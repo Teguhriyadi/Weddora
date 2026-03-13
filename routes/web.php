@@ -41,6 +41,8 @@ Route::middleware(["web", "autentikasi"])->group(function () {
         Route::prefix("history-guest")->group(function() {
             Route::get("/", [HistoryGuestController::class, "index"]);
             Route::get("/download", [HistoryGuestController::class, "download"]);
+            Route::get("/{id}", [HistoryGuestController::class, "show"]);
+            Route::get("/{id}/guest-public", [HistoryGuestController::class, "show_guest_public"]);
         });
 
         Route::get("/guest/info/{id}", [InputAttendanceController::class, "info_guest"]);

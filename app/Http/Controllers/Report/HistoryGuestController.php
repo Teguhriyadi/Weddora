@@ -50,4 +50,18 @@ class HistoryGuestController extends Controller
             'riwayat-' . $tab . '-' . $dari . '-sd-' . $sampai . '.xlsx'
         );
     }
+
+    public function show($id)
+    {
+        $data["show"] = GuestCheckin::where("id", $id)->first();
+
+        return view("modules.report.history-guest.show", $data);
+    }
+
+    public function show_guest_public($id)
+    {
+        $data["show"] = GuestPublic::where("id", $id)->first();
+
+        return view("modules.report.history-guest.show", $data);
+    }
 }
